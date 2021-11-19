@@ -78,7 +78,7 @@ const Section = styled.section`
     width: 100%;
     margin-left: 60%;
     left: 55%;
-    padding-top:0;
+    padding-top: 0;
     height: 720px;
     box-sizing: border-box;
     @media (max-width: 768px) {

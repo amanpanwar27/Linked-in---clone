@@ -18,7 +18,7 @@ const Header = (props) => {
               <Navlist>
                 <a href="/home">
                   <img src="images/nav-home.svg" />
-                  <span className = 'active'>Home</span>
+                  <span className="active">Home</span>
                 </a>
               </Navlist>
               <Navlist>
@@ -45,6 +45,15 @@ const Header = (props) => {
                   <span>Notifications</span>
                 </a>
               </Navlist>
+              <User>
+                <a>
+                  <img src="/images/user.svg" />
+                </a>
+              </User>
+              <Work>
+                <img src="/images/nav-work.svg" />
+                <img src="/images/down-icon.svg" />
+              </Work>
             </Navlistwrapper>
           </Nav>
         </Content>
@@ -57,12 +66,12 @@ const Container = styled.div`
   border-bottom: 1px rgba(0, 0, 0, 0.08);
   position: fixed;
   width: 100%;
-  height:auto;
+  height: auto;
   z-index: 2;
 `;
 const Content = styled.div`
-  padding: 8px 10px;
-  height:auto;
+  padding: 2px 10px;
+  height: 60px;
   display: flex;
 `;
 const Logo = styled.span`
@@ -102,16 +111,16 @@ const Nav = styled.nav`
 `;
 const Navlistwrapper = styled.ul`
   display: flex;
+  margin-left:-15px;
   flex-wrap: nowrap;
-  flex-direction:row;
+  flex-direction: row;
   list-style-type: none;
-  width:100%;
-  span{
-    
-}
+  width: 100%;
+  span {
+  }
 `;
 const Navlist = styled.li`
-margin-right:35px;
+  margin-right: 35px;
   a {
     display: flex;
     flex-direction: column;
@@ -123,10 +132,9 @@ margin-right:35px;
       height: 25px;
       width: 25px;
     }
-    @media(max-width:768px)
-    {
-        margin-right:0;
-        justify-content:space-between;
+    @media (max-width: 768px) {
+      margin-right: 0;
+      justify-content: space-between;
     }
     &:hover,
     &:active {
@@ -134,4 +142,25 @@ margin-right:35px;
     }
   }
 `;
+const User = styled(Navlist)`
+a>img{
+  border-radius:50%;
+  height:35px;
+  width:35px;
+}
+@media(max-width:768px){
+  padding-right:25px;
+}
+`;
+const Work = styled(User)`
+padding-top:10px;
+Work>img{
+  height:35px;
+width:35px;
+}
+
+@media(max-width:768px)
+{
+  display:none;
+}`;
 export default Header;
