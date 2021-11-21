@@ -52,7 +52,7 @@ const Header = (props) => {
               </User>
               <Work>
                 <img src="/images/nav-work.svg" />
-                <img src="/images/down-icon.svg" />
+                <span>Work <img src="/images/down-icon.svg" /></span>
               </Work>
             </Navlistwrapper>
           </Nav>
@@ -152,15 +152,29 @@ a>img{
   padding-right:25px;
 }
 `;
-const Work = styled(User)`
-padding-top:10px;
-Work>img{
-  height:35px;
-width:35px;
-}
-
+const Work = styled(Navlist)`
+display:flex;
+margin-top:-5px;
+font-size:13px;
+flex-direction:column;
 @media(max-width:768px)
 {
   display:none;
-}`;
+}
+img{
+  width:35px;
+  height:35px;
+}
+span{
+  margin-top:-5px;
+  align-items:center;
+  text-align:center;
+  img{
+    width:15px;
+  height:15px;
+}
+  }
+
+`;
+
 export default Header;
