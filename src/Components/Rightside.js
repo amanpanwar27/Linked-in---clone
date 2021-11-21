@@ -54,7 +54,7 @@ const Container = styled.div`
   margin-right: 20px;
   display: flex;
   flex-direction: column;
-  @media (max-width: 768px) {
+  @media (max-width: 768px) { 
     margin-top:20px;
     margin-bottom:20px;
   }
