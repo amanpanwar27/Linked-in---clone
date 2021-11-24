@@ -56,6 +56,24 @@ const Main = (props) => {
 
           <span>comments 23</span>
         </Socialcounts>
+        <Socialactions>
+          <button>
+            <img src="/images/thumb-up.png" />
+            <span>Like</span>
+          </button>
+          <button>
+            <img src="/images/comments.png" />
+            <span>Comments</span>
+          </button>
+          <button>
+            <img src="/images/next.png" />
+            <span>Share</span>
+          </button>
+          <button>
+            <img src="/images/send.png" />
+            <span>Send</span>
+          </button>
+        </Socialactions>
       </Article>
     </Container>
   );
@@ -189,8 +207,8 @@ const Socialcounts = styled.div`
   padding-left: 5px;
   padding-right: 5px;
   & > button {
-    display:flex;
-    flex-direction:row;
+    display: flex;
+    flex-direction: row;
     background-color: white;
     border: none;
   }
@@ -198,8 +216,29 @@ const Socialcounts = styled.div`
     width: 25px;
     height: 25px;
   }
-  &>button>span::last-child{
-    padding-top:10px;
+  & > button > span::last-child {
+    padding-top: 10px;
+  }
+`;
+const Socialactions = styled.div`
+  display: flex;
+  flex-direction: row;
+  & > button > img {
+    width: 35px;
+    height: 35px;
+  }
+  margin-left: 20px;
+  margin-right: 20px;
+  justify-content: space-between;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  & > button {
+    padding-top: 5px;
+    border: none;
+    background-color: white;
+  }
+  & > button > span {
+    height: 100%;
+    padding-left: 10px;
   }
 `;
 export default Main;

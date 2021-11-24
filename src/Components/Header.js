@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { connect } from "react-redux";
 const Header = (props) => {
   return (
     <div>
@@ -52,7 +53,9 @@ const Header = (props) => {
               </User>
               <Work>
                 <img src="/images/nav-work.svg" />
-                <span>Work <img src="/images/down-icon.svg" /></span>
+                <span>
+                  Work <img src="/images/down-icon.svg" />
+                </span>
               </Work>
             </Navlistwrapper>
           </Nav>
@@ -111,7 +114,7 @@ const Nav = styled.nav`
 `;
 const Navlistwrapper = styled.ul`
   display: flex;
-  margin-left:-15px;
+  margin-left: -15px;
   flex-wrap: nowrap;
   flex-direction: row;
   list-style-type: none;
@@ -143,38 +146,45 @@ const Navlist = styled.li`
   }
 `;
 const User = styled(Navlist)`
-a>img{
-  border-radius:50%;
-  height:35px;
-  width:35px;
-}
-@media(max-width:768px){
-  padding-right:25px;
-}
+  a > img {
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+  }
+  @media (max-width: 768px) {
+    padding-right: 25px;
+  }
 `;
 const Work = styled(Navlist)`
-display:flex;
-margin-top:-5px;
-font-size:13px;
-flex-direction:column;
-@media(max-width:768px)
-{
-  display:none;
-}
-img{
-  width:35px;
-  height:35px;
-}
-span{
-  margin-top:-5px;
-  align-items:center;
-  text-align:center;
-  img{
-    width:15px;
-  height:15px;
-}
+  display: flex;
+  margin-top: -5px;
+  font-size: 13px;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    display: none;
   }
-
+  img {
+    width: 35px;
+    height: 35px;
+  }
+  span {
+    margin-top: -5px;
+    align-items: center;
+    text-align: center;
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  }
 `;
-
-export default Header;
+const Mapstatetoprops = (state) => {
+  console.log(state);
+  return {
+    user: state.userstate,
+  };
+};
+const Mapdispatchtoprops = (dispatch) => {
+  return {};
+};
+const newcomponent = connect(Mapstatetoprops, Mapdispatchtoprops)(Header);
+export default newcomponent;

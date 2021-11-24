@@ -1,9 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getuserauth } from "./actions/index.js";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./Components/Login";
 import Header from "./Components/Header";
 import Home from "./Components/Home";
-export default function App(props) {
+function App(props) {
+  useEffect(() => {
+    props.getuserauth();
+  }, []);
   return (
     <div className="App">
       <Router>
@@ -20,3 +26,15 @@ export default function App(props) {
     </div>
   );
 }
+const Mapstatetoprops = (state) => {
+  return {};
+};
+// sends dispatched data to props
+const Mapdispatchtoprops = (dispatch) => {
+  return {
+    getuserauth: () => dispatch(getuserauth),
+  };
+};
+const newcomponent = connect(Mapstatetoprops, Mapdispatchtoprops)(App);
+export default newcomponent;
+

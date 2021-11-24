@@ -1,5 +1,8 @@
 import styled from "styled-components";
-export default function Login(props) {
+import { SigninApi } from "../actions/index";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+function Login(props) {
   return (
     <div className="login">
       <Container>
@@ -17,10 +20,16 @@ export default function Login(props) {
             Welcome to your professional community
             <img src="/images/login-hero.svg" />
             <Form>
-              <Google>
-                <img src="/images/google.svg" />
-                <span>Sign in with Google</span>
-              </Google>
+              <Link to="/home">
+                <Google
+                  onClick={() => {
+                    props.Signin();
+                  }}
+                >
+                  <img src="/images/google.svg" />
+                  <span>Sign in with Google</span>
+                </Google>
+              </Link>
             </Form>
           </Hero>
         </Section>
@@ -128,3 +137,11 @@ const Google = styled.button`
     background-color: lightgrey;
   }
 `;
+const Mapstatetoprops = (state) => {
+  return {};
+};
+const Mapdispatchtoprops = (dispatch) => {
+  return { Signin: () => dispatch(SigninApi) };
+};
+const newcomponent = connect(Mapstatetoprops, Mapdispatchtoprops)(Login);
+export default newcomponent;
