@@ -20,7 +20,6 @@ function Login(props) {
             Welcome to your professional community
             <img src="/images/login-hero.svg" />
             <Form>
-              <Link to="/home">
                 <Google
                   onClick={() => {
                     props.Signin();
@@ -29,7 +28,6 @@ function Login(props) {
                   <img src="/images/google.svg" />
                   <span>Sign in with Google</span>
                 </Google>
-              </Link>
             </Form>
           </Hero>
         </Section>

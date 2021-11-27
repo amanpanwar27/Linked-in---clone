@@ -1,4 +1,4 @@
-import { auth, provider } from "../firebase";
+import db, { auth, provider } from "../firebase";
 import { ADD_USER } from "../actions/Actiontype";
 
 const setuser = (payload) => {
@@ -18,13 +18,16 @@ export function SigninApi() {
       console.log(err.message);
     });
   return temp;
+  //   return dispatch => {
+  //     auth.signInWithPopup(provider)
+  //         .then(payload => dispatch(setuser(payload.user)))
+  //         .catch(error => alert(error.message));
+  // }
 }
 export function getuserauth() {
   return (dispatch) => {
     auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        dispatch(setuser(user));
-      }
+      if (user) await dispatch(setuser(user));
     });
   };
 }

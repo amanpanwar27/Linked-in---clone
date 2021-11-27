@@ -48,7 +48,11 @@ const Header = (props) => {
               </Navlist>
               <User>
                 <a>
-                  <img src="/images/user.svg" />
+                  {props.userstate.users && props.userstate.users.photoURL ? (
+                    <img src={props.userstate.users.photoURL} />
+                  ) : (
+                    <img src="/images/user.svg" />
+                  )}
                 </a>
               </User>
               <Work>
@@ -178,9 +182,9 @@ const Work = styled(Navlist)`
   }
 `;
 const Mapstatetoprops = (state) => {
-  console.log(state);
+  console.log("state : ", state);
   return {
-    user: state.userstate,
+    userstate: state.userState,
   };
 };
 const Mapdispatchtoprops = (dispatch) => {

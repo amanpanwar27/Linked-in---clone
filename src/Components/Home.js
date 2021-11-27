@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Leftside from "./Leftside";
-import { connect } from "react-redux";
 import Rightside from "./Rightside";
 import Main from "./Main";
 const Home = (props) => {
