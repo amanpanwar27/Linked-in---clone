@@ -31,3 +31,12 @@ export function getuserauth() {
     });
   };
 }
+export function signoutAPI(){
+  return (dispatch)=>{
+    auth.signOut().then(()=>{
+      dispatch(setuser(null))
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+}

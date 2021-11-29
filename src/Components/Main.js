@@ -1,11 +1,19 @@
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { useState } from "react";
+import Postmodal from "./Postmodal";
 const Main = (props) => {
+  const [clickstatus, setclickstatus] = useState("closed");
   return (
     <Container>
       <Sharebox>
         <div className="postbutton">
-          <img src="/images/user.svg" />
-          <button>Start a post</button>
+          {props.userstate.users ? (
+            <img src={props.userstate.users.photoURL} />
+          ) : (
+            <img src="/images/user.svg" />
+          )}
+          <button onClick={() => setclickstatus("open")}>Start a post</button>
         </div>
         <div className="postmenu">
           <button>
@@ -75,6 +83,7 @@ const Main = (props) => {
           </button>
         </Socialactions>
       </Article>
+      <Postmodal clickstatus={clickstatus} setclickstatus={setclickstatus} />
     </Container>
   );
 };
@@ -241,4 +250,15 @@ const Socialactions = styled.div`
     padding-left: 10px;
   }
 `;
-export default Main;
+
+const Mapstatetoprops = (state) => {
+  console.log("in main :", state);
+  return {
+    userstate: state.userState,
+  };
+};
+const Mapdispatchtoprops = (dispatch) => {
+  return {};
+};
+const newcomponent = connect(Mapstatetoprops, Mapdispatchtoprops)(Main);
+export default newcomponent;

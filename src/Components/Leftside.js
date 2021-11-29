@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { connect } from "react-redux";
 const Leftside = (props) => {
   return (
     <Container>
@@ -7,7 +8,7 @@ const Leftside = (props) => {
           <Userbackground>
             <Photo />
           </Userbackground>
-          <span>Welcome, there!</span>
+          <span>Welcome, {props.user ? props.user.displayName : "there!"}</span>
           <a>Add a photo</a>
         </Userinfo>
         <Widget>
@@ -48,7 +49,7 @@ const Container = styled.div`
   margin-right: 10px;
   background-color: white;
   @media (max-width: 768px) {
-    margin-bottom:20px;
+    margin-bottom: 20px;
   }
 `;
 const Userinfo = styled.div`
@@ -178,4 +179,10 @@ const Events = styled.div`
     }
   }
 `;
-export default Leftside;
+const Mapstatetoprops = (state) => {
+  return {
+    user: state.userState.users,
+  };
+};
+const newcomponent = connect(Mapstatetoprops)(Leftside);
+export default newcomponent;

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { SigninApi } from "../actions/index";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { useEffect,useState } from "react";
 function Login(props) {
   return (
     <div className="login">
@@ -136,7 +137,9 @@ const Google = styled.button`
   }
 `;
 const Mapstatetoprops = (state) => {
-  return {};
+  return {
+    users:state.userState.users
+  };
 };
 const Mapdispatchtoprops = (dispatch) => {
   return { Signin: () => dispatch(SigninApi) };

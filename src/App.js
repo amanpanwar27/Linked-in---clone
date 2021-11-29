@@ -6,10 +6,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./Components/Login";
 import Header from "./Components/Header";
 import Home from "./Components/Home";
-function App({getuserauth}) {
+function App({ getuserauth },props) {
   useEffect(() => {
     getuserauth();
-  },[]);
+  }, []);
   return (
     <div className="App">
       <Router>
@@ -38,4 +38,3 @@ const Mapdispatchtoprops = (dispatch) => {
 };
 const newcomponent = connect(Mapstatetoprops, Mapdispatchtoprops)(App);
 export default newcomponent;
-

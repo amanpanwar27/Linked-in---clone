@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import Leftside from "./Leftside";
 import Rightside from "./Rightside";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Main from "./Main";
-const Home = (props) => {
+const Home = ({ users }) => {
   return (
     <div className="Home">
       <Container>
@@ -31,5 +33,10 @@ const Layout = styled.div`
     padding: 0 5px;
   }
 `;
-export default Home;
-
+const Mapstatetoprops = (state) => {
+  return {
+    users: state.userState.users,
+  };
+};
+const newcomponent = connect(Mapstatetoprops)(Home);
+export default newcomponent;
