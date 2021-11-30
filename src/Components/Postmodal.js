@@ -1,8 +1,37 @@
 import styled from "styled-components";
 import { useState } from "react";
+import ReactPlayer from "react-player";
+import { connect } from "react-redux";
+import { PostArticleAPI } from "../actions";
+import firebase from "firebase";
 function Postmodal(props) {
   const [textarea, settextarea] = useState("");
   const [photourl, setphotourl] = useState("");
+  const [videourl, setvideourl] = useState("");
+  const [asseturl, setasseturl] = useState("");
+  const clickhandler = (e) => {
+    const link = e.target.files[0];
+    setphotourl(link);
+  };
+  const Postarticle = (e) => {
+    e.preventDefault();
+    if (e.target !== e.currentTarget) return;
+    const payload = {
+      image: photourl,
+      video: videourl,
+      user: props.user,
+      description: textarea,
+      timestamp: firebase.firestore.Timestamp.now(),
+    };
+    props.postArticle(payload);
+    reset(e);
+  };
+  const reset = (e) => {
+    settextarea("");
+    setasseturl("");
+    setvideourl("");
+    setphotourl("");
+  };
   return (
     <div className="postmodal">
       {props.clickstatus === "open" && (
@@ -17,8 +46,12 @@ function Postmodal(props) {
           </Content>
           <Sharingcontent>
             <Userinfo>
-              <img src="/images/user.svg" />
-              <span>Name</span>
+              {props.user ? (
+                <img src={props.user.photoURL} />
+              ) : (
+                <img src="images/user.svg" />
+              )}
+              <span>{props.user.displayName}</span>
             </Userinfo>
             <Editor>
               <textarea
@@ -28,23 +61,65 @@ function Postmodal(props) {
                   settextarea(e.target.value);
                 }}
               />
-              <Uploadimage>
-                <input type="file" id="file" style={{display:"none"}}></input>
-                <label for="file">Click to Uploadimage</label>
-              </Uploadimage>
+              {asseturl == "image" && (
+                <Uploadimage>
+                  <input
+                    type="file"
+                    id="file"
+                    style={{ display: "none" }}
+                    onChange={(e) => clickhandler(e)}
+                    accept="image/jpeg , image/png , image/jpg , image/gif"
+                    name="image"
+                  ></input>
+                  <label for="file">Click to Uploadimage</label>
+                  {photourl && (
+                    <img
+                      src={URL.createObjectURL(photourl)}
+                      style={{
+                        justifyContent: "center",
+                        width: "300px",
+                        height: "100px",
+                      }}
+                    />
+                  )}
+                </Uploadimage>
+              )}
             </Editor>
+            {asseturl == "video" && (
+              <>
+                <input
+                  type="text"
+                  placeholder="enter video link to upload"
+                  style={{
+                    width: "300px",
+                    height: "30px",
+                  }}
+                  onChange={(e) => setvideourl(e.target.value)}
+                />
+                {videourl && (
+                  <ReactPlayer
+                    url={videourl}
+                    style={{
+                      margin: "auto",
+                      marginTop: "5px",
+                      height: "50px",
+                    }}
+                  />
+                )}
+              </>
+            )}
           </Sharingcontent>
           <ShareCreation>
-            <Assetbutton>
+            <Assetbutton onClick={() => setasseturl("image")}>
               <img src="/images/gallery.png" />
             </Assetbutton>
-            <Assetbutton>
+            <Assetbutton onClick={() => setasseturl("video")}>
               <img src="/images/video2.png" />
             </Assetbutton>
             <Assetbutton>
               <img src="/images/comment.png" />
             </Assetbutton>
-            <Postbutton>Post</Postbutton>
+            <Postbutton onClick={(e) => Postarticle(e)}>Post</Postbutton>
           </ShareCreation>
         </Container>
       )}
@@ -89,6 +164,7 @@ const Sharingcontent = styled.div`
   height: auto;
   top: 100px;
   margin: 0 20px;
+  overflow-y: scroll;
 `;
 const Userinfo = styled.div`
   img {
@@ -96,6 +172,7 @@ const Userinfo = styled.div`
     height: 50px;
     border-radius: 50%;
     margin-left: 25%;
+    background-color: none;
   }
   padding-top: 20px;
   display: flex;
@@ -149,4 +226,13 @@ const Postbutton = styled.button`
   border-radius: 20px;
 `;
 const Uploadimage = styled.div``;
-export default Postmodal;
+const Mapstatetoprops = (state) => {
+  return {
+    user: state.userState.users,
+  };
+};
+const Mapdispatchtoprops = (dispatch) => {
+  return { postArticle: (payload) => dispatch(PostArticleAPI(payload)) };
+};
+const newcomponent = connect(Mapstatetoprops, Mapdispatchtoprops)(Postmodal);
+export default newcomponent;

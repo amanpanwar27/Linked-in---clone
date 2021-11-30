@@ -1,4 +1,4 @@
-import {ADD_USER} from '../actions/Actiontype';
+import {ADD_USER, GET_ARTICLES} from '../actions/Actiontype';
 const INITIAL_STATE = {
     users:null
 }

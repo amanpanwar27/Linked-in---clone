@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Postmodal from "./Postmodal";
+import { getArticlesAPI } from "../actions";
+import ReactPlayer from "react-player";
 const Main = (props) => {
   const [clickstatus, setclickstatus] = useState("closed");
+  useEffect(() => {
+    props.getArticles();
+  }, []);
   return (
     <Container>
       <Sharebox>
@@ -34,55 +39,61 @@ const Main = (props) => {
           </button>
         </div>
       </Sharebox>
-      <Article>
-        <Articledetails>
-          <Hero>
-            <a>
-              <img src="/images/user.svg" />
-            </a>
-          </Hero>
-          <Herodata>
-            <span>Title</span>
-            <span>Date</span>
-            <span>Info</span>
-          </Herodata>
-          <Menu>
-            <img src="/images/menu.png" />
-          </Menu>
-        </Articledetails>
-        <Description>Description</Description>
-        <Postimage>
-          <img src="/images/mypic.jpeg" />
-        </Postimage>
-        <Socialcounts>
-          <button>
-            <img src="/images/like.png" />
-            <img src="/images/applause.png" />
-            <img src="/images/heart.png" />
-            <div>67</div>
-          </button>
+      {props.articles.map((item) => (
+        <Article>
+          <Articledetails>
+            <Hero>
+              <a>
+                <img src={item.actor.image} />
+              </a>
+            </Hero>
+            <Herodata>
+              <span>{item.actor.title}</span>
+              <span>{item.actor.date.toDate().toLocaleDateString()}</span>
+              <span>{item.actor.description}</span>
+            </Herodata>
+            <Menu>
+              <img src="/images/menu.png" />
+            </Menu>
+          </Articledetails>
+          <Description>{item.description}</Description>
+          <Postimage>
+            {!item.sharedImg && item.video ? (
+              <ReactPlayer width={"100%"} url={item.video} />
+            ) : (
+              item.sharedImg && <img src={item.sharedImg} alt="" />
+            )}
+          </Postimage>
+          <Socialcounts>
+            <button>
+              <img src="/images/like.png" />
+              <img src="/images/applause.png" />
+              <img src="/images/heart.png" />
+              <div>67</div>
+            </button>
 
-          <span>comments 23</span>
-        </Socialcounts>
-        <Socialactions>
-          <button>
-            <img src="/images/thumb-up.png" />
-            <span>Like</span>
-          </button>
-          <button>
-            <img src="/images/comments.png" />
-            <span>Comments</span>
-          </button>
-          <button>
-            <img src="/images/next.png" />
-            <span>Share</span>
-          </button>
-          <button>
-            <img src="/images/send.png" />
-            <span>Send</span>
-          </button>
-        </Socialactions>
-      </Article>
+            <span>comments 23</span>
+          </Socialcounts>
+          <Socialactions>
+            <button>
+              <img src="/images/thumb-up.png" />
+              <span>Like</span>
+            </button>
+            <button>
+              <img src="/images/comments.png" />
+              <span>Comments</span>
+            </button>
+            <button>
+              <img src="/images/next.png" />
+              <span>Share</span>
+            </button>
+            <button>
+              <img src="/images/send.png" />
+              <span>Send</span>
+            </button>
+          </Socialactions>
+        </Article>
+      ))}
       <Postmodal clickstatus={clickstatus} setclickstatus={setclickstatus} />
     </Container>
   );
@@ -170,6 +181,8 @@ const Herodata = styled.div`
   flex-direction: column;
   span {
     font-size: 12px;
+    margin-left:120px;
+    text-align:start;
   }
   margin-left: -80%;
   @media (max-width: 768px) {
@@ -255,10 +268,13 @@ const Mapstatetoprops = (state) => {
   console.log("in main :", state);
   return {
     userstate: state.userState,
+    articles: state.articlereducer.articles,
   };
 };
 const Mapdispatchtoprops = (dispatch) => {
-  return {};
+  return {
+    getArticles: () => dispatch(getArticlesAPI()),
+  };
 };
 const newcomponent = connect(Mapstatetoprops, Mapdispatchtoprops)(Main);
 export default newcomponent;
