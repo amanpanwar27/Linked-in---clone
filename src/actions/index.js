@@ -47,6 +47,7 @@ export function signoutAPI() {
       .catch((err) => {
         console.log(err);
       });
+    window.location.href = "/";
   };
 }
 

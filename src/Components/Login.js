@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { SigninApi } from "../actions/index";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 function Login(props) {
   return (
     <div className="login">
@@ -21,14 +21,14 @@ function Login(props) {
             Welcome to your professional community
             <img src="/images/login-hero.svg" />
             <Form>
-                <Google
-                  onClick={() => {
-                    props.Signin();
-                  }}
-                >
-                  <img src="/images/google.svg" />
-                  <span>Sign in with Google</span>
-                </Google>
+              <Google
+                onClick={async() => {
+                  await props.Signin();
+                }}
+              >
+                <img src="/images/google.svg" />
+                <span>Sign in with Google</span>
+              </Google>
             </Form>
           </Hero>
         </Section>
@@ -138,11 +138,15 @@ const Google = styled.button`
 `;
 const Mapstatetoprops = (state) => {
   return {
-    users:state.userState.users
+    users: state.userState.users,
   };
 };
 const Mapdispatchtoprops = (dispatch) => {
-  return { Signin: () => dispatch(SigninApi) };
+  return {
+    Signin: () => {
+      dispatch(SigninApi);
+    },
+  };
 };
 const newcomponent = connect(Mapstatetoprops, Mapdispatchtoprops)(Login);
 export default newcomponent;
